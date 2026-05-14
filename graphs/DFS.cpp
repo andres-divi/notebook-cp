@@ -11,15 +11,15 @@ typedef long long ll;
 
 // Variables globales para el grafo
 vector<vector<int>> ady;
-vector<bool> visit;
+vector<bool> visited;
 
 void dfs(int u) {
-    visit[u] = true;
+    visited[u] = true;
     
     // [ACCION AL DESCUBRIR EL NODO]
     
     for (int v : ady[u]) {
-        if (!visit[v]) {
+        if (!visited[v]) {
             // [ACCION ANTES DE VISITAR AL HIJO]
             dfs(v);
             // [ACCION AL VOLVER DEL HIJO]
@@ -37,12 +37,11 @@ int main() {
     cin.tie(NULL);
 
     int n, m; // n = nodos, m = aristas
-    if (!(cin >> n >> m)) return 0;
 
     // IMPORTANTE: resize para evitar out_of_range
     // Usamos n + 1 por si el problema usa nodos indexados desde 1
     ady.resize(n + 1);
-    visit.assign(n + 1, false);
+    visited.assign(n + 1, false);
 
     // Lectura de la lista de adyacencia
     forn(i, m) {
@@ -59,7 +58,7 @@ int main() {
 
     // Si el grafo puede tener varias componentes conexas:
     forr(i, 1, n + 1) {
-        if (!visit[i]) {
+        if (!visited[i]) {
             dfs(i);
         }
     }
